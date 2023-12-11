@@ -1,0 +1,94 @@
+/* @import url("https://fonts.googleapis.com/css2?family=Ubuntu&display=swap"); */
+
+@font-face {
+  font-family: Arcade;
+  src: url("./font/ARCADE_N.TTF");
+}
+
+body {
+  /* --primary: rgb(111, 0, 255); */
+
+  padding: 0;
+  margin: 0;
+  color: #fff;
+  font-family: "Arcade", sans-serif;
+
+  overflow: hidden;
+  background-color: #000;
+}
+
+.pauseScreen {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.582);
+  backdrop-filter: blur(8px);
+}
+
+.pauseScreen:not([data-enabled]) {
+  display: none;
+}
+
+.pauseScreen .content {
+  text-align: center;
+  margin-trim: block;
+}
+
+.pauseScreen .content .title {
+  --_default: #fff;
+  --_blink: #f00;
+
+  font-size: 3.8em;
+  margin-bottom: 8px;
+  animation: colorChange 1.1s infinite;
+}
+
+.pauseScreen .content .details,
+.pauseScreen .content .timer {
+  font-size: 1.2em;
+  color: #dadada;
+  margin-bottom: 25px;
+}
+
+.pauseScreen .content .details output {
+  font-size: 1.2em;
+}
+
+button {
+  margin-top: 22px;
+  padding: 20px 28px;
+  font-size: 1.1em;
+  background-color: transparent;
+  border: 2px solid white;
+  color: inherit;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.gameOverlay {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  inset: 0;
+  pointer-events: none;
+  font-size: 4em;
+}
+
+.gameOverlay:not([data-enabled]) {
+  display: none;
+}
+
+@keyframes colorChange {
+  0%,
+  24%,
+  76%,
+  100% {
+    color: var(--_default);
+  }
+  25%,
+  75% {
+    color: var(--_blink);
+  }
+}

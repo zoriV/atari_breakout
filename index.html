@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atari breakout</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.min.js"
+      defer
+    ></script>
+    <script src="./script/script.js" defer type="module"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="pauseScreen" id="screen-win">
+      <div class="content">
+        <h1 class="title">You win</h1>
+        <p class="details">
+          You earned <output id="screen-win-points"></output> points
+        </p>
+        <p class="timer">Time: <output id="screen-win-timer"></output></p>
+        <button data-resetbutton>Try again</button>
+      </div>
+    </div>
+    <div class="pauseScreen" id="screen-lose">
+      <div class="content">
+        <h1 class="title">game over</h1>
+        <p class="details">
+          You earned <output id="screen-lose-points"></output> points
+        </p>
+        <p class="timer">Time: <output id="screen-lose-timer"></output></p>
+        <button data-resetbutton>Try again</button>
+      </div>
+    </div>
+    <div class="gameOverlay" id="gameOverlay" data-enabled>
+      <div class="points"><output id="gameOverlay-points"></output></div>
+    </div>
+  </body>
+</html>
