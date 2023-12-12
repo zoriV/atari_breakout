@@ -17,6 +17,10 @@ let direction = 0;
 let blocks = [];
 export let gameUtil;
 
+const blockColors = [
+  "#bf6bff", "#ac60e6", "#9956cc", "#864bb3"
+]
+
 function setup() {
   blocks = [];
 
@@ -25,7 +29,7 @@ function setup() {
   width = windowWidth;
   height = windowHeight;
 
-  platform = new Platform(width / 2 - 110, height - 100, 0.75, 140, 15);
+  platform = new Platform(width / 2, height - 100, 0.75, 140, 15);
   ball = new Ball(width / 2, height / 2, 8, 26, platform, blocks);
 
   gameUtil = new GameUtil(BLOCK_COLUMNS * BLOCK_ROWS, platform);
@@ -56,11 +60,13 @@ function setup() {
           (width - 2 * PADDING_WALLS - BLOCK_COLUMNS * BLOCKS_OFFSET_VERTICAL) /
             BLOCK_COLUMNS,
           BLOCK_HEIGHT,
-          color("#BC13FE")
+          blockColors[y]
         )
       );
     }
   }
+
+  gameUtil.startGame();
 }
 
 function windowResized() {
@@ -71,7 +77,7 @@ function windowResized() {
 }
 
 function draw() {
-  if (gameUtil.isPaused()) return;
+  // if (gameUtil.isPaused()) return;
   // background(10);
   clear();
 

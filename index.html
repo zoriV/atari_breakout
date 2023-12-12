@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="pauseScreen" id="screen-win">
+    <div class="pauseScreen shownOnAttr" id="screen-win">
       <div class="content">
         <h1 class="title">You win</h1>
         <p class="details">
@@ -22,7 +22,7 @@
         <button data-resetbutton>Try again</button>
       </div>
     </div>
-    <div class="pauseScreen" id="screen-lose">
+    <div class="pauseScreen shownOnAttr" id="screen-lose">
       <div class="content">
         <h1 class="title">game over</h1>
         <p class="details">
@@ -32,8 +32,9 @@
         <button data-resetbutton>Try again</button>
       </div>
     </div>
-    <div class="gameOverlay" id="gameOverlay" data-enabled>
-      <div class="points"><output id="gameOverlay-points"></output></div>
+    <div class="gameOverlay shownOnAttr" id="gameOverlay" data-enabled>
+      <div class="points shownOnAttr" id="gameOverlay-points"><output id="gameOverlay-points-value"></output></div>
+      <div class="countdown shownOnAttr" id="gameOverlay-counter"></div>
     </div>
   </body>
 </html>

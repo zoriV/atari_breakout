@@ -6,7 +6,7 @@
 }
 
 body {
-  /* --primary: rgb(111, 0, 255); */
+  --primary: rgb(111, 0, 255);
 
   padding: 0;
   margin: 0;
@@ -25,10 +25,6 @@ body {
   inset: 0;
   background-color: rgba(0, 0, 0, 0.582);
   backdrop-filter: blur(8px);
-}
-
-.pauseScreen:not([data-enabled]) {
-  display: none;
 }
 
 .pauseScreen .content {
@@ -76,9 +72,30 @@ button {
   font-size: 4em;
 }
 
-.gameOverlay:not([data-enabled]) {
+.shownOnAttr:not([data-enabled]) {
   display: none;
 }
+
+.countdown {
+  color: var(--primary);
+  font-size: 3.1em;
+} 
+
+.countdown.ripple {
+  animation: ripple 0.5s ease-in-out forwards;
+}
+
+@keyframes ripple {
+  0%{
+    scale: 1;
+    opacity: 1;
+  }
+  100% {
+    scale: 1.3;
+    opacity: 0;
+  }
+}
+
 
 @keyframes colorChange {
   0%,

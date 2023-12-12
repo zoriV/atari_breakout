@@ -10,7 +10,9 @@ class DocumentManipulator {
   #loseScreen_timer = document.querySelector("#screen-lose-timer");
 
   #gameOverlay = document.querySelector("#gameOverlay");
-  #gameOverlay_points = document.querySelector("#gameOverlay-points");
+  #gameOverlay_pointsWrapper = document.querySelector("#gameOverlay-points");
+  #gameOverlay_points = document.querySelector("#gameOverlay-points-value");
+  #gameOverlay_counter = document.querySelector("#gameOverlay-counter");
 
   #resetButtons = document.querySelectorAll("button[data-resetbutton]");
 
@@ -23,7 +25,7 @@ class DocumentManipulator {
   }
 
   showWinScreen(points, time) {
-    this.HideOverlay();
+    this.hideOverlay();
 
     this.#showElement(this.#winScreen, true);
     this.#winScreen_points.innerText = points;
@@ -31,7 +33,7 @@ class DocumentManipulator {
   }
 
   showLoseScreen(points, time) {
-    this.HideOverlay();
+    this.hideOverlay();
 
     this.#showElement(this.#loseScreen, true);
     this.#loseScreen_points.innerText = points;
@@ -48,15 +50,49 @@ class DocumentManipulator {
     this.#showElement(this.#loseScreen, false);
     this.#showElement(this.#winScreen, false);
     this.showOverlay();
-    gameUtil.resetPoints();
+    gameUtil.reset();
   }
 
   showOverlay() {
     this.#showElement(this.#gameOverlay, true);
   }
 
-  HideOverlay() {
+  hideOverlay() {
     this.#showElement(this.#gameOverlay, false);
+  }
+
+  showPoints() {
+    this.showOverlay();
+    this.#showElement(this.#gameOverlay_pointsWrapper, true);
+    this.#showElement(this.#gameOverlay_counter, false);
+  }
+
+  hidePoints() {
+    this.hideOverlay();
+    this.#showElement(this.#gameOverlay_pointsWrapper, false);
+  }
+
+  showCountdown() {
+    this.showOverlay();
+    this.#showElement(this.#gameOverlay_counter, true);
+    this.#showElement(this.#gameOverlay_pointsWrapper, false);
+  }
+
+  hideCountdown() {
+    this.hideOverlay();
+    this.#showElement(this.#gameOverlay_counter, false);
+  }
+
+  updateCountdown(newValue, effect) {
+    this.#gameOverlay_counter.innerText = newValue;
+    if(effect) {
+      this.#gameOverlay_counter.classList.add("ripple");
+      this.#showElement(this.#gameOverlay_counter, true);
+      this.#gameOverlay_counter.addEventListener("animationend", () => {
+        this.#gameOverlay_counter.classList.remove("ripple");
+        this.#showElement(this.#gameOverlay_counter, false);
+      }, {once: true});
+    }
   }
 
   updatePoints(newValue) {

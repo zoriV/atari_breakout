@@ -20,6 +20,9 @@ export class Platform {
   }
 
   move(direction) {
+    if (gameUtil.isPaused())
+      return;
+
     if (this.getLeft() <= 0 && direction == -1) return;
 
     if (this.getRight() >= width && direction == 1) return;
@@ -58,12 +61,12 @@ export class Ball {
     this.#blocks = blocks;
 
     this.#pos = createVector(x, y);
-    this.#velocity = createVector(random(3, 8) * random([1, -1]), speed);
+    this.#velocity = createVector(random(3, 6) * random([1, -1]), speed);
   }
 
   draw() {
     this.#checkCollisions();
-    this.#pos.add(this.#velocity);
+    this.#move();
 
     this.#trail.push(createVector(this.#pos.x, this.#pos.y));
     if (this.#trail.length > 10) {
@@ -82,7 +85,16 @@ export class Ball {
     ellipse(this.#pos.x, this.#pos.y, this.size, this.size);
   }
 
+  #move() {
+    if (gameUtil.isPaused())
+      return;
+    this.#pos.add(this.#velocity);
+  }
+
   #checkCollisions() {
+    if (gameUtil.isPaused())
+      return;
+
     // left and right wall
     if (this.#pos.x <= this.size / 2 || this.#pos.x >= width - this.size / 2)
       this.#velocity.x *= -1;
@@ -185,9 +197,29 @@ export class GameUtil {
   #gamePaused = false;
   #platformReference;
   #time = 0;
+  #countdown = 5; // time in seconds
+
   constructor(maxPoints, platform) {
     this.#maxPoints = maxPoints;
     this.#platformReference = platform;
+  }
+
+  startGame() {
+    documentManipulator.showCountdown()
+    // documentManipulator.updateCountdown(this.#countdown);
+    this.#gamePaused = true;
+
+
+    const inter = setInterval(() => {
+      this.#countdown -= 1;
+      documentManipulator.updateCountdown(this.#countdown, true);
+
+      if (this.#countdown == 0) {
+        this.#gamePaused = false;
+        documentManipulator.showPoints();
+        clearInterval(inter);
+      }
+    }, 1000);
   }
 
   increasePoints() {
@@ -199,18 +231,27 @@ export class GameUtil {
     if (this.#points == this.#maxPoints) this.gameWon();
   }
 
-  resetPoints() {
+  reset() {
     this.#points = 0;
     documentManipulator.updatePoints(this.#points);
+
+    this.#countdown = 5;
+    documentManipulator.updateCountdown(this.#countdown, false);
   }
 
   gameLost() {
+    if (this.isPaused())
+      return;
+
     this.pauseGame();
     documentManipulator.showLoseScreen(this.#points, this.getTimer());
     console.log("You lose");
   }
 
   gameWon() {
+    if (this.isPaused())
+      return;
+
     this.pauseGame();
     documentManipulator.showWinScreen(this.#points, this.getTimer());
     console.log("You win");
@@ -225,6 +266,8 @@ export class GameUtil {
   }
 
   timer(timePassed) {
+    if (this.isPaused())
+      return;
     this.#time += timePassed;
   }
 
