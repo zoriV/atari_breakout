@@ -114,9 +114,10 @@ export class Ball {
     ) {
       this.#velocity.y *= -1;
 
-      // const multiplier = map(this.#pos.x,this.#platform.getLeft(), this.#platform.getRight(), -1.2, 1.2);
+      // TODO: save default velocity x
+      // const multiplier = map(this.#pos.x,this.#platform.getLeft(), this.#platform.getRight(), -4, 4);
       // console.log( abs(multiplier));
-      // this.#velocity.x *= abs(multiplier);
+      // this.#velocity.x = this.#velocity.x * abs(multiplier);
     }
 
     this.#blocks.forEach((block) => {
@@ -125,16 +126,17 @@ export class Ball {
         this.#pos.y,
         this.size
       );
-      if (collision.x != 0 && collision.y != 0) {
+      if (collision.x != 0 || collision.y != 0) {
         block.break();
         gameUtil.increasePoints();
-        if (collision.x == 1) {
-          this.#velocity.x *= -1;
-        }
-        if (collision.y == 1) {
-          this.#velocity.y *= -1;
-          this.#velocity.x *= -1;
-        }
+      }
+
+      if (collision.x == 1) {
+        this.#velocity.x *= -1;
+      }
+
+      if (collision.y == 1) {
+        this.#velocity.y *= -1;
       }
     });
   }
@@ -174,13 +176,15 @@ export class Block {
 
     if (
       this.#pos.x - this.sizeX / 2 <= x + size / 2 &&
-      this.#pos.x + this.sizeX / 2 >= x - size / 2
+      this.#pos.x + this.sizeX / 2 >= x - size / 2 &&
+      this.#pos.y - this.sizeY / 2< y && this.#pos.y + this.sizeY / 2 > y
     )
       collision.x = 1;
 
     if (
       this.#pos.y + this.sizeY / 2 >= y - size &&
-      this.#pos.y - this.sizeY / 2 <= y + size / 2
+      this.#pos.y - this.sizeY / 2 <= y + size / 2 && 
+      this.#pos.x - this.sizeX / 2 < x && this.#pos.x + this.sizeX / 2> x
     )
       collision.y = 1;
     return collision;
