@@ -34,11 +34,18 @@ body {
 
 .pauseScreen .content .title {
   --_default: #fff;
-  --_blink: #f00;
-
+  
   font-size: 3.8em;
   margin-bottom: 8px;
   animation: colorChange 1.1s infinite;
+}
+
+.pauseScreen#screen-lose .content .title {
+  --_blink: #f00;
+}
+
+.pauseScreen#screen-win .content .title {
+  --_blink: var(--primary);
 }
 
 .pauseScreen .content .details,
